@@ -1,0 +1,28 @@
+{
+  "name": "goldstar",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "pwa:preview": "npm run build && npm run preview"
+  },
+  "devDependencies": {
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/canvas-confetti": "^1.9.0",
+    "@vite-pwa/nuxt": "^1.0.4",
+    "mkcert": "^3.2.0",
+    "nuxt": "3.18.1",
+    "vite-plugin-mkcert": "^1.17.8"
+  },
+  "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@vueuse/core": "^13.7.0",
+    "canvas-confetti": "^1.9.3",
+    "vue3-emoji-picker": "^1.1.8"
+  }
+}
