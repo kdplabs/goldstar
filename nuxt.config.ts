@@ -1,5 +1,3 @@
-import mkcert from 'vite-plugin-mkcert'
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -40,13 +38,5 @@ export default defineNuxtConfig({
       enabled: true,
       type: 'module',
     },
-  },
-  vite: {
-    plugins: [
-      mkcert()
-    ]
-  },
-  devServer: {
-    https: true
   }
 })
