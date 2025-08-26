@@ -1,15 +1,16 @@
 <script setup>
 import { ref, computed } from 'vue';
 import LeaderCard from '~/components/LeaderCard.vue';
+import { useDataStore } from '~/composables/useDataStore';
 
-const { users } = useDataStore();
+const { sortedUsers } = useDataStore();
 const searchQuery = ref('');
 
 const filteredUsers = computed(() => {
-  if (!users.value) return [];
-  const sortedUsers = [...users.value].sort((a, b) => b.goldStars - a.goldStars);
-  if (!searchQuery.value) return sortedUsers;
-  return sortedUsers.filter(user => 
+  if (!searchQuery.value) {
+    return sortedUsers.value;
+  }
+  return sortedUsers.value.filter(user =>
     user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
   );
 });
@@ -28,16 +29,26 @@ const filteredUsers = computed(() => {
         >
       </div>
     </div>
-    <div v-if="filteredUsers.length > 0" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-      <NuxtLink v-for="(user, index) in filteredUsers" :key="user.id" :to="`/users/${user.id}`">
-        <LeaderCard 
-          :user="user"
-          :rank="index + 1" 
-        />
-      </NuxtLink>
-    </div>
-    <div v-else class="text-center text-lg text-text-secondary">
-      No leaders found matching your search.
+    <div class="mt-8">
+      <ClientOnly>
+        <div v-if="filteredUsers && filteredUsers.length > 0" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <NuxtLink v-for="(user, index) in filteredUsers" :key="user.id" :to="`/users/${user.id}`">
+            <LeaderCard 
+              :user="user"
+              :rank="index + 1" 
+            />
+          </NuxtLink>
+        </div>
+        <div v-else class="text-center text-lg text-text-secondary">
+          <p>No leaders found.</p>
+        </div>
+        <template #fallback>
+          <!-- this will be rendered on server side -->
+          <div class="text-center text-lg text-text-secondary">
+            <p>Loading leaders...</p>
+          </div>
+        </template>
+      </ClientOnly>
     </div>
   </div>
 </template>
